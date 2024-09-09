@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Condicionales e Iteraciones</title>
+    <link rel="stylesheet" href="css/estilo.css" />
+  </head>
+
+  <body>
+    <div class="contenedor">
+      <h1>Ranking de la Comunidad</h1>
+
+      <p>
+        En base a las votaciones de nuestra comunidad te presentamos las
+        recomendaciones que tenes que tener en cuenta si querés un finde de
+        relax
+      </p>
+      <ul>
+        <li v-for="(pelicula, index) in peliculas" :key="index">
+          <!--Usar v-for para el array peliculas sobre el <li>. Usar el atributo key en base al item titulo-->
+          <div>
+            <h2>{{ pelicula.titulo }}</h2>
+            <!--Mostrar de la iteracion la propiedad titulo usando interpolación-->
+            <p>Estreno : {{ pelicula.estreno }}</p>
+            <!--Mostrar de la iteracion la propiedad estreno usando interpolación -->
+            <p>Director: {{ pelicula.director }}</p>
+            <!--Mostrar de la iteracion la propiedad director usando interpolación -->
+
+			
+			<span v-for="(genero, i) in pelicula.genero" :key="i">{{ genero }}</span>
+			
+            <!--Usar otro v-for sobre el item genero para poder acceder al array y mostrar con interpolación -->
+
+			<img v-bind:src="pelicula.portada" v-bind:alt="pelicula.titulo">
+            <!--Usar v-bind para el src y asociarlo al item portada, usar v-bind para el atributo alt y enlazarlo con el item del titulo -->
+
+            <p v-bind:class="{
+				'calificacion': pelicula.calificacion >= 7,
+				'calificacion_mala': pelicula.calificacion <= 6
+			  }">
+			  {{ pelicula.calificacion ? pelicula.calificacion : '-' }}
+			</p>
+            <!--Usar v-bind para el atributo class, pasar el objeto con la clase calificación y evaluar si el item calificacion es >=7, caso contrario establecer la clase calificacion_mala si item calificacion es <=6. Esto afectara el background de la estrella.
+	       	Mostrar en la interpolacion el item calificacion, esto mostrará el número-->
+
+			<p v-if="pelicula.calificacion >= 7">Recomendada!</p>
+            <!--Usar v-if para evaluar item calificacion >= 7 -->
+
+            <p v-else-if="pelicula.calificacion <= 6 && pelicula.calificacion !== null">Baja Calificación</p>
+            <!--Usar v-else-if para evaluar item calificacion <=6 -->
+
+            <p v-else>Sin Calificar</p>
+            <!-- Usar v-else -->
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <script src="scripts/vue3.js"></script>
+    <script src="scripts/app.js"></script>
+  </body>
+</html>
